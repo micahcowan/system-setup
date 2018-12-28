@@ -1,0 +1,51 @@
+# This is the shell file where I keep all my usual aliases and short,
+# general-purpose shell functions.
+if ls --color=auto -d . >/dev/null 2>&1
+then
+    alias ls='ls --color=auto'
+    alias less='less -R'
+fi
+
+if test -n "${TMUX-}" && command -v wtitle >/dev/null 2>&1
+then
+    alias vim='wtitle vim'
+    alias man='wtitle man'
+    alias ssh='wtitle ssh'
+else
+    : # alias vim='emacsclient -n'
+fi
+
+alias getpatch='wget --content-disposition --no-check-certificate'
+alias screen-config="./configure --prefix=/opt/screen CFLAGS='-g -DDEBUG'"
+alias wget-config='./configure --prefix=/opt/wget CFLAGS=-g'
+alias null-config='./configure --prefix=/dev/null CFLAGS=-g'
+alias iscr="info '(screen)Command Index'"
+alias xjdic='luit -encoding eucJP xjdic'
+alias q='quilt'
+alias en='LC_ALL=en_US.utf8 LANGUAGE=en'
+alias a='printf \\a'
+alias aa='printf \\a; sleep 1; printf \\a'
+alias asa='printf \\a; sleep 1; printf \\a'
+
+alias mcn='ssh micah.cowan.name'
+
+# For manipulating a Mercurial-tracked quilt repository.
+alias qhg='hg -R patches/'
+
+# For spawning a test tmux server, when the default one is running.
+alias tnew='TMUX= ~/devel/tmux/sf/tmux -L new -f ~/.tnew.conf attach'
+
+# Edit a new file, after first creating it with executable permissions.
+# Useful for starting a new script file.
+viscr() {
+    for n in "$@"; do
+        touch "$n"
+        chmod +x "$n"
+    done
+    ${VISUAL:-$EDITOR} "$@"
+}
+
+alias teseq='teseq --color=auto'
+ceseq() { teseq --color=always "$@" | \less -r; }
+
+# vim: set ft=sh :

@@ -1,0 +1,6 @@
+if test -z "$KSH_VERSION"; then
+    return
+fi
+
+HISTFILE=$HOME/.ksh-hist/sh_history.$$
+HISTSIZE=10000

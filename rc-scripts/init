@@ -1,0 +1,45 @@
+# Things that should be read before any other .profile.d scripts (EXCEPT
+# the path-manip functions in ??path-fns).
+
+mcn=micah.cowan.name
+
+pmt='$'
+if test "$(id -u)" -eq 0; then
+    pmt='#'
+fi
+PS1="${PS1_OVERRIDE-$(id -n -u)${pmt} }"
+export EMAIL='micah@addictivecode.org'
+export VISUAL=emacsclient
+export VISUAL=vim
+if command -v "$VISUAL" >/dev/null 2>&1
+then
+    :
+else
+    VISUAL=vi
+fi
+export PAGER=less
+export VIEWER="$VISUAL"
+export EDITOR="$VISUAL"
+if { echo "$LANG"; echo "$LC_ALL"; } | grep -q '^en'; then
+    export LANGUAGE=en@boldquot
+fi
+#if { locale -a | grep '^ja_JP.utf8$'; } >/dev/null 2>&1; then
+#    export LANGUAGE=ja
+#    export LANG=ja_JP.utf8
+#elif { locale -a | grep '^en_US.utf8$'; } >/dev/null 2>&1; then
+#    export LANG=en_US.utf8
+#else
+#    export LANG=C
+#fi
+
+# gnome-terminal -> xterm-256color
+if [ \( "x$COLORTERM" = "xgnome-terminal" -o "x$COLORTERM" = "xTerminal" -o "x$COLORTERM" = "xxfce4-terminal" \) -a "x$TERM" = "xxterm" ] &&
+        infocmp xterm-256color >/dev/null 2>&1; then
+    TERM=xterm-256color
+fi
+
+# Be sure to set the editing mode _after_ setting VISUAL; ksh
+# "helpfully" overwrites it when you set VISUAL.
+set -o vi
+
+ulimit -c unlimited
