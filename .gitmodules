@@ -1,0 +1,9 @@
+[submodule "ext/profile-loader"]
+	path = ext/profile-loader
+	url = git@github.com:micahcowan/profile-loader.git
+[submodule "ext/opt-pather"]
+	path = ext/opt-pather
+	url = git@github.com:micahcowan/opt-pather
+[submodule "ext/promptjobs"]
+	path = ext/promptjobs
+	url = git@github.com:micahcowan/promptjobs
