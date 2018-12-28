@@ -1,0 +1,7 @@
+XTerm*initialFont: 3
+XTerm*geometry: 80x58
+XTerm*background: black
+XTerm*foreground: white
+XTerm*metaSendsEscape: true
+XTerm*termName: xterm-256color
+XTerm*utf8: 2

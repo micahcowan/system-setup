@@ -1,0 +1,29 @@
+# debug off
+bind ^A other
+caption always "%{= bw}%-Lw%{+ BW}%50>%n*%f %t%{-}%+Lw%<"
+bind -c caption p caption always "%{= bw}%-Lw%{BW}%50>%n*%f %t%{-}%+Lw%=%>%{by}%+p%{-}/%{bY}%p%<"
+bind -c caption o caption always "%{= bw}%-Lw%{BW}%50>%n*%f %t%{-}%+Lw%<"
+bind -c caption s caption splitonly
+bind p command -c caption
+startup_message off
+defflow auto interrupt
+defscrollback 250
+altscreen on
+
+sorendition = BW
+# rendition bell =
+# rendition monitor =
+
+bind - command -c shift
+bind -c shift 0 select 10
+bind -c shift 1 select 11
+bind -c shift 2 select 12
+bind -c shift 3 select 13
+bind -c shift 4 select 14
+bind -c shift 5 select 15
+bind -c shift 6 select 16
+bind -c shift 7 select 17
+bind -c shift 8 select 18
+bind -c shift 9 select 19
+
+termcapinfo screen* XT

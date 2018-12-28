@@ -1,0 +1,27 @@
+[extensions]
+hgext.fetch =
+hgext.graphlog =
+hgext.pager =
+hgext.purge =
+hgext.transplant =
+hgext.convert =
+hgext.mq =
+hgext.record = 
+
+[ui]
+verbose = True
+#merge = hg-diff3-merge
+
+[merge-patterns]
+ChangeLog    = hg-merge-changelog
+**/ChangeLog = hg-merge-changelog
+
+[defaults]
+log = --style=compact
+outgoing = --style=compact
+incoming = --style=compact
+fetch = -m 'Automated merge.'
+import = --exact
+
+[pager]
+attend = help, log, diff, glog, annotate

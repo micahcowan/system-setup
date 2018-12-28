@@ -1,0 +1,22 @@
+PJOBS_PRE_LIST_STR='['
+PJOBS_POST_LIST_STR=']'
+
+if test "$(id -u)" -eq 0; then
+    # If we're root, let the default settings take hold.
+    :
+elif test "${PWDSAVE#/tmp/quilt}" != "$PWDSAVE"; then
+    # This is to give us a different prompt color when we're in "quilt
+    # shell", mode, to avoid confusion.
+    PJOBS_BASE_TPUT='sgr0; setaf 2'
+    PJOBS_NUM_TPUT='sgr0; bold' # bold white
+    PJOBS_JOB_TPUT='sgr0' # dim white
+elif test "$(tput colors)" -eq 256; then
+    PJOBS_BASE_TPUT='sgr0; setaf 103' # grey-blue
+    PJOBS_SEP_TPUT='bold; setaf 19' # bold, muted blue
+    PJOBS_NUM_TPUT='sgr0; setaf 83' # light green
+    PJOBS_JOB_TPUT='sgr0; setaf 189' # very pale blue
+else
+    PJOBS_BASE_TPUT='setaf 4' # blue
+    PJOBS_NUM_TPUT='setaf 2'  # green
+    PJOBS_JOB_TPUT='sgr0'     # white
+fi

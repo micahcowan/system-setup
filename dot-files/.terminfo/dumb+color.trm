@@ -1,0 +1,13 @@
+# Custom term-mode for eshell
+dumb+color|80-column dumb tty with added color support,
+	am,
+	colors#8, cols#80, lines#24, ncv#3, pairs#64,
+	bel=^G, cr=^M, cud1=^J, ind=^J, blink=\E[5m, bold=\E[1m, 
+	rev=\E[7m, rmso=\E[m, rmul=\E[m, ritm=\E[m,
+	setab=\E[4%p1%dm, setaf=\E[3%p1%dm,
+	setb=\E[4%?%p1%{1}%=%t4%e%p1%{3}%=%t6%e%p1%{4}%=%t1%e%p1%{6}%=%t3%e%p1%d%;m,
+	setf=\E[3%?%p1%{1}%=%t4%e%p1%{3}%=%t6%e%p1%{4}%=%t1%e%p1%{6}%=%t3%e%p1%d%;m,
+        sgr=\E[0;10%?%p1%t;7%;%?%p2%t;4%;%?%p3%t;7%;%?%p4%t;5%;%?%p6%t;1%;%?%p7%t;8%;%?%p9%t;11%;m,
+	sgr0=\E[0;10m, smso=\E[7m,
+	smul=\E[4m, sitm=\E[3m,
+	op=\E[39;49m,
