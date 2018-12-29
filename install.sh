@@ -13,7 +13,7 @@ main() {
     install_rc
 
     info "Succeeded!"
-    info "Try: exec ${SHELL:-/bin/sh}"
+    info "Try: exec ${SHELL:-/bin/bash}"
 }
 
 alias echo='printf "%s\n"'
