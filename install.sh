@@ -1,6 +1,7 @@
 #!/bin/sh
 
 set -e -u -C
+set +e
 
 main() {
     dest=${1-$HOME}
@@ -95,11 +96,11 @@ populate_available() {
     info "Populating scripts in ${avail}..."
     mkdir -p "$avail"
 
-    hardlink ext/opt-pather/opt-path-setup.sh "${avail}/opt-path-setup.sh"
-    hardlink ext/promptjobs/prompt-jobs.sh "${avail}/prompt-jobs.sh"
+    copy ext/opt-pather/opt-path-setup.sh "${avail}/opt-path-setup.sh"
+    copy ext/promptjobs/prompt-jobs.sh "${avail}/prompt-jobs.sh"
 
     for file in rc-scripts/*; do
-        hardlink "$file" "${avail}/$(basename "$file")"
+        copy "$file" "${avail}/$(basename "$file")"
     done
 }
 
