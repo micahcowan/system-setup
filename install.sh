@@ -3,6 +3,7 @@
 set -e -u -C
 
 main() {
+    src=$(dirname $0)
     dest=${1-$HOME}
     info "Installing to ${dest}..."
     mkdir -p "${dest}"
@@ -95,10 +96,10 @@ populate_available() {
     info "Populating scripts in ${avail}..."
     mkdir -p "$avail"
 
-    copy ext/opt-pather/opt-path-setup.sh "${avail}/opt-path-setup.sh"
-    copy ext/promptjobs/prompt-jobs.sh "${avail}/prompt-jobs.sh"
+    copy "$src"/ext/opt-pather/opt-path-setup.sh "${avail}/opt-path-setup.sh"
+    copy "$src"/ext/promptjobs/prompt-jobs.sh "${avail}/prompt-jobs.sh"
 
-    for file in rc-scripts/*; do
+    for file in "$src"/rc-scripts/*; do
         copy "$file" "${avail}/$(basename "$file")"
     done
 }
@@ -117,8 +118,8 @@ populate_enabled() {
 
 install_rc() {
     info 'Installing bashrc...'
-    copy ext/profile-loader/dot.runrc.sh "${dest}/.bashrc"
-    copy ext/profile-loader/dot.runrc.sh "${dest}/.kshrc"
+    copy "$src"/ext/profile-loader/dot.runrc.sh "${dest}/.bashrc"
+    copy "$src"/ext/profile-loader/dot.runrc.sh "${dest}/.kshrc"
 }
 
 main "$@"
