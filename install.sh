@@ -1,7 +1,6 @@
 #!/bin/sh
 
 set -e -u -C
-set +e
 
 main() {
     dest=${1-$HOME}
@@ -46,25 +45,25 @@ endswith() {
 take_safe_ownership() {
     set -o noclobber # already set, but be sure anyway
     file=$1
-    if : >"$file"; then
+    if > "$file"; then
         return 0
     fi
     file=$file.orig
-    if : >"$file"; then
+    if > "$file"; then
         verb "$1 already exists, moving to $file."
         mv -f -- "$1" "$file"
-        if ! : >"$1"; then
+        if ! > "$1"; then
             die "$1 was recreated after moving same-named file, refusing to proceed."
         fi
     else
-        nfile=$file."$(stat -t %Y%m%d -f %Sm "$1")"
+        nfile=$file."$(date +%Y%m%d)"
         verb "$file also already exists. Trying $nfile."
         file=$nfile
-        if ! : >"$file"; then
+        if ! > "$file"; then
             die "$file ALSO also already exists. Refusing to proceed."
         else
             mv -f -- "$1" "$file"
-            if ! : >"$1"; then
+            if ! > "$1"; then
                 die "$1 was recreated after moving same-named file, refusing to proceed."
             fi
         fi
