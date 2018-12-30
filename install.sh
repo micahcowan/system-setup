@@ -10,6 +10,9 @@ contains() {
 
 if ! test -t 2; then
     alias tput=:
+    alias finish=
+else
+    alias finish='printf \\a; sleep 1; printf \\a'
 fi
 
 for m in "$srcdir"/modules/*; do
@@ -35,3 +38,10 @@ for m in "$srcdir"/modules/*; do
         ./install.sh
     )
 done
+
+echo
+tput bold >&2
+printf '### Installation finished!\n'
+tput sgr0 >&2
+
+finish
