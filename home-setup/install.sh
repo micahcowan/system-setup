@@ -8,6 +8,7 @@ main() {
     info "Installing to ${dest}..."
     mkdir -p "${dest}"
 
+    install_dotfiles
     populate_available
     populate_enabled
     install_rc
@@ -90,6 +91,15 @@ copy() {
 }
 
 ## Primary tasks ##
+
+install_dotfiles() {
+    info "Installing dot-files to ${dest}..."
+
+    ( cd "$src"/dot-files && find . -type f ) | while read -r file; do
+        mkdir -p "$dest"/"$(dirname "$file")"
+        copy "$src"/dot-files/"$file" "$dest"/"$file"
+    done
+}
 
 populate_available() {
     avail="${dest}/.rc-available"
