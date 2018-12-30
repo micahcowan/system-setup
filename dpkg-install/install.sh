@@ -26,5 +26,5 @@ set -x
 asroot apt-get update
 asroot apt-get upgrade --yes
 apt-cache dumpavail | asroot dpkg --update-avail /dev/stdin
-asroot dpkg --set-selections < ./pkg-selections
+asroot dpkg --set-selections < "$(dirname $0)"/pkg-selections
 asroot apt-get dselect-upgrade --yes
