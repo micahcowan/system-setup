@@ -1,6 +1,6 @@
 ### Packages to install
 # Editing
-emacs install
+#emacs install
 vim install
 # Development stuff
 build-essential install
