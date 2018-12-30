@@ -1,0 +1,38 @@
+### Packages to install
+# Editing
+emacs install
+vim install
+# Development stuff
+build-essential install
+flex install
+subversion install
+cvs install
+mercurial install
+git-core install
+debhelper install
+exuberant-ctags install
+quilt install
+devscripts install
+patchutils install
+autoconf install
+automake install
+texinfo install
+cscope install
+gawk install
+libncurses5-dev install
+# Needed to build tmux:
+libevent-dev install
+# End
+# Development docs
+manpages-dev install
+glibc-doc install
+autoconf-doc install
+perl-doc install
+make-doc install
+texinfo-doc-nonfree install
+gawk-doc install
+# Miscellaneous
+imagemagick install
+elinks install
+tmux install
+teseq install
