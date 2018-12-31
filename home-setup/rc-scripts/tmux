@@ -1,0 +1,39 @@
+tmux_start() {
+    eval `/usr/bin/ssh-agent`
+    if type -P tmux >&/dev/null; then
+	tmux
+    else
+	echo >&2 'WARNING: TMUX NOT FOUND!'
+	return 1
+    fi
+    #xpra start :7 --bind-tcp :31131 && DISPLAY=:7 $HOME/opt/tmux/bin/tmux
+    #~/opt/tmux/bin/tmux
+    #tmux new emacs
+}
+
+if test "$LANG" = "en_US"; then
+    LANG='en_US.UTF-8'
+fi
+
+if [ -f ~/.profile.d.sh ]; then
+    . ~/.profile.d.sh
+fi
+
+# Fire up xpra, ssh-agent, tmux
+if [ -n "${TMUX-}" ]; then
+    : # Do nothing, we're already in tmux.
+elif [ ! -t 0 ]; then
+    : # Do nothing (no terminal: don't screw up rsync!)
+elif [ -e ~/.no-tmux -o -e /etc/debian_chroot ]; then
+    echo Starting without tmux.
+else
+    if false && [ -n "$SSH_AUTH_SOCK" -a "${SSH_AUTH_SOCK%ssh-auth-sock}" = "$SSH_AUTH_SOCK" ]; then
+        ln -sf "$SSH_AUTH_SOCK" ~/ssh-auth-sock
+        SSH_AUTH_SOCK=$HOME/ssh-auth-sock
+    fi
+    if tmux attach || tmux_start; then
+        exit # after tmux detach
+    else
+        echo 'WARNING! CAN'\''T START TMUX!' >&2
+    fi
+fi
