@@ -38,8 +38,8 @@ die() {
     exit 1
 }
 
-endswith() {
-    test "x${2%"$1"}" != "x${2}"
+contains() {
+    test "x${2%%"$1"*}" != "x${2}"
 }
 
 ## Safe-install functions ##
@@ -120,7 +120,7 @@ populate_enabled() {
     mkdir -p "$enabled"
 
     for file in "${avail}"/*; do
-        endswith .orig "$file" && continue
+        contains .orig "$file" && continue
         bfile=$(basename "$file")
         symlink "../.rc-available/$bfile" "${enabled}/$bfile"
     done
