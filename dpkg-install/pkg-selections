@@ -5,9 +5,6 @@ vim install
 # Development stuff
 build-essential install
 flex install
-subversion install
-cvs install
-mercurial install
 git-core install
 debhelper install
 exuberant-ctags install
@@ -19,9 +16,9 @@ automake install
 texinfo install
 cscope install
 gawk install
-libncurses5-dev install
+#libncurses5-dev install
 # Needed to build tmux:
-libevent-dev install
+#libevent-dev install
 # End
 # Development docs
 manpages-dev install
