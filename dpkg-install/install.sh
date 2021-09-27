@@ -5,7 +5,7 @@ set -e -u -C
 # Does sudo exist on this system?
 if test "$(id -u)" -eq 0; then
     alias asroot=''
-elif type -P sudo 2>/dev/null; then
+elif which sudo 2>/dev/null; then
     alias asroot=sudo
 else
     asroot() {

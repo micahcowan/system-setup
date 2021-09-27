@@ -13,9 +13,10 @@ devscripts install
 patchutils install
 autoconf install
 automake install
-texinfo install
+#texinfo install
 cscope install
 gawk install
+sharutils install
 #libncurses5-dev install
 # Needed to build tmux:
 #libevent-dev install
