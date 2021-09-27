@@ -47,6 +47,8 @@ convert_profile_d() {
                 ln -v -s -f ../.rc-available/"$name" ~/.rc-enabled/"$name"
             fi
         done
+
+        mv -v ~/.profile.d.sh ~/.profile.d.sh.mv.$RANDOM
     fi
 }
 
