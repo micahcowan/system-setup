@@ -27,6 +27,7 @@ elif [ ! -t 0 ]; then
 elif [ -e ~/.no-tmux -o -e /etc/debian_chroot ]; then
     echo Starting without tmux.
 else
+    cd ~
     if false && [ -n "$SSH_AUTH_SOCK" -a "${SSH_AUTH_SOCK%ssh-auth-sock}" = "$SSH_AUTH_SOCK" ]; then
         ln -sf "$SSH_AUTH_SOCK" ~/ssh-auth-sock
         SSH_AUTH_SOCK=$HOME/ssh-auth-sock
