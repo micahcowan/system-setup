@@ -2,10 +2,6 @@
 
 set -e -u -C
 
-have_rc_d=
-have_profile_d=
-have_dotfiles=
-
 # paths of files we manage, together with paths where we might
 # expect to find them for comparison purposes. Each record is
 # separated by :, paths in a record separated by spaces (with the first
@@ -13,7 +9,7 @@ have_dotfiles=
 paths=
 
 main() {
-    determine_rc_or_profile_d
+    convert_profile_d
 
     paths_for_dotfiles
     paths_for_available
@@ -23,17 +19,34 @@ main() {
     reconcile_changes
 }
 
-determine_rc_or_profile_d() {
-    # Are the rc files stored in ~/.rc-available, or in
-    # ~/.profile.d (old style)?
-    if test -d ~/.rc-available; then
-        have_rc_d=yes
-    fi
-    if test -d ~/.profile.d; then
-        have_profile_d=yes
-    fi
-    if test -n "$have_rc_d" -o -n "$have_profile_d"; then
-        have_dotfiles=yes
+convert_profile_d() {
+    if test -d ~/.profile.d -a ! -d ~/.rc-available; then
+        echo 'No ~/.rc-available found. Running install...'
+        NO_INSTALL_DOTFILES=yes ./install.sh
+        echo
+        echo
+        echo 'Converting ~/.profile.d files to ~/.rc-available...'
+
+        # Copy all ~/.profile.d files to ~/.rc-available, except a few that
+        # changed significantly in the ~/.rc-available scheme and whose
+        # functionality will therefore be replaced. And enable them by default.
+        for script in ~/.profile.d/*; do
+            name=${script##*/}
+            case name in
+                00path-fns|path-setup)
+                    printf 'Skipping %s\n' "$script"
+                    name=''
+                    ;;
+                03ksh)
+                    name=ksh
+                    ;;
+            esac
+            if test -n "$name"; then
+                cp -v -f "$script" ~/.rc-available/"$name"
+                # ...and enable by default
+                ln -v -s -f ../.rc-available/"$name" ~/.rc-enabled/"$name"
+            fi
+        done
     fi
 }
 
@@ -50,11 +63,18 @@ paths_add() {
 }
 
 paths_for_available() {
-    : # XXX
+    for file in rc-scripts/*; do
+        name=${file##*/}
+        dest="$HOME/.rc-available/${name}"
+        paths_add paths "$file" "$dest"
+    done
 }
 
 paths_for_ext() {
-    : # XXX
+    paths_add paths ext/opt-pather/opt-path-setup.sh ~/.rc-available/opt-path-setup.sh
+    paths_add paths ext/promptjobs/prompt-jobs.sh ~/.rc-available/prompt-jobs.sh
+    paths_add paths ext/profile-loader/dot.runrc.sh ~/.bashrc
+    paths_add paths ext/profile-loader/dot.runrc.sh ~/.kshrc
 }
 
 handle_missing_files() {
@@ -105,6 +125,11 @@ handle_missing_files() {
                     if test -n "$do_it"; then
                         mkdir -p "${2%/*}"
                         cp -v "$1" "$2"
+                        if test "x$2" != "x${2#$HOME/.rc-available/}"; then
+                            # enable new rc files by default
+                            name=${2#$HOME/.rc-available/}
+                            ln -s ../.rc-available/"$name" ~/.rc-enabled/"$name"
+                        fi
                     fi
                 done
                 ;;
@@ -146,6 +171,8 @@ reconcile_changes() {
             eval "set -- $record"
             printf '  %s\n' "$2"
         done
+        printf '%s\n' "Press ENTER to reconcile"
+        read answer
 
         # Reconcile!
         while shift_one_path_record differing record; do

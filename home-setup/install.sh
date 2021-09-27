@@ -8,7 +8,11 @@ main() {
     info "Installing to ${dest}..."
     mkdir -p "${dest}"
 
-    install_dotfiles
+    if test -z "${NO_INSTALL_DOTFILES-}"; then
+        install_dotfiles
+    else
+        info "(Skipping dotfiles installation - handled in reconciliation?)"
+    fi
     populate_available
     populate_enabled
     install_rc
