@@ -8,6 +8,10 @@ main() {
     info "Installing to ${dest}..."
     mkdir -p "${dest}"
 
+    if ! test -e "${src}/ext/opt-pather/opt-path-setup.sh"; then
+        die "Missing submodules! Run 'git submodule update --init' and try again"
+    fi
+
     if test -z "${NO_INSTALL_DOTFILES-}"; then
         install_dotfiles
     else
