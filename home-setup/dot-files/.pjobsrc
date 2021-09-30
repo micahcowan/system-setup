@@ -20,3 +20,7 @@ else
     PJOBS_NUM_TPUT='setaf 2'  # green
     PJOBS_JOB_TPUT='sgr0'     # white
 fi
+
+if test -r ~/.pjobsrc-local; then
+    . ~/.pjobsrc-local
+fi

@@ -158,4 +158,8 @@ set listchars=eol:$,tab:>-
 set modelines=3
 set modeline
 
+if filereadable(expand('~/.vimrc-local'))
+    source ~/.vimrc-local
+endif
+
 endif " v:version > 600
