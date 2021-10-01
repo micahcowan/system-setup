@@ -7,3 +7,4 @@
 [submodule "ext/promptjobs"]
 	path = home-setup/ext/promptjobs
 	url = git@github.com:micahcowan/promptjobs
+	branch = trunk
