@@ -1,0 +1,3 @@
+if test -r /opt/sw/bin/init.sh; then
+    . /opt/sw/bin/init.sh
+fi
