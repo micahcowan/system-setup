@@ -8,3 +8,9 @@
 	path = home-setup/ext/promptjobs
 	url = git@github.com:micahcowan/promptjobs
 	branch = trunk
+[submodule "vim-stuff/ext/vim-pathogen"]
+	path = vim-stuff/ext/vim-pathogen
+	url = git@github.com:tpope/vim-pathogen.git
+[submodule "vim-stuff/ext/vim-asm_ca65"]
+	path = vim-stuff/ext/vim-asm_ca65
+	url = git@github.com:maxbane/vim-asm_ca65.git

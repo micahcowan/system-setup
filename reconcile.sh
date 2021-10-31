@@ -8,6 +8,12 @@ contains() {
     test "x${2##*"$1"}" != "x$2"
 }
 
+if ! test -e "$srcdir"/home-setup/ext/opt-pather/opt-path-setup.sh; then
+    echo >&2 'ERROR: git checkout wasn'\''t recursive!'
+    echo >&2 'ERROR: run: git submodule update --init --recursive'
+    exit 2
+fi
+
 for m in "$srcdir"/modules/*/reconcile.sh; do
     if contains \* "$m"; then
         echo >&2 "$0: No reconciliation to be done"

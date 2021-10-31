@@ -9,10 +9,16 @@ contains() {
 }
 
 if ! test -t 2; then
-    alias tput=:
-    alias finish=
+    tput() { :; }
+    finish() { :; }
 else
-    alias finish='printf \\a; sleep 1; printf \\a'
+    finish() { printf \\a; sleep 1; printf \\a; }
+fi
+
+if ! test -e "$srcdir"/home-setup/ext/opt-pather/opt-path-setup.sh; then
+    echo >&2 'ERROR: git checkout wasn'\''t recursive!'
+    echo >&2 'ERROR: run: git submodule update --init --recursive'
+    exit 2
 fi
 
 for m in "$srcdir"/modules/*; do
