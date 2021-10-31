@@ -158,6 +158,10 @@ set listchars=eol:$,tab:>-
 set modelines=3
 set modeline
 
+execute pathogen#infect()
+
+autocmd BufRead,BufNewFile *.s set ft=asm_ca65
+
 if filereadable(expand('~/.vimrc-local'))
     source ~/.vimrc-local
 endif
