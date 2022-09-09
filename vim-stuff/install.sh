@@ -11,7 +11,7 @@ fi
 
 if test ! -d ~/.vim/bundle/vim-asm_ca65; then
     mkdir -p ~/.vim/bundle
-    cp -a -v "$srcdir"/ext/vim-asm_ca65 ~/vim/bundle/
+    cp -a -v "$srcdir"/ext/vim-asm_ca65 ~/.vim/bundle/
 fi
 
 exit 0
