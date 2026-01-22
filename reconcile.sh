@@ -28,6 +28,11 @@ main() {
 
     # 2. Run each module's ./reconcile.sh script with the --list
     # option, to obtain lists of source/destination files to reconcile
+    echo
+    tput bold >&2
+    printf '### Reconciling all changed files\n'
+    tput sgr0 >&2
+
     paths=''
     for m in "$srcdir"/modules/*/reconcile.sh; do
         gather_module_file_lists "$m"
