@@ -52,6 +52,14 @@ paths_for_dotfiles() {
         file=${file#./}
         printf '%s %s\n' "$srcdir"/dot-files/"$file" ~/"$file"
     done
+    if test -d ~/.config/nvim; then
+        for file in $(cd ~/.config/nvim \
+                      && find . -type f | sed 's#^\./##'); do
+            file=${file#./}
+            printf '%s %s\n' "$srcdir"/dot-files/.config/nvim/"$file" \
+                ~/.config/nvim/"$file"
+        done
+    fi
 }
 
 paths_for_available() {
