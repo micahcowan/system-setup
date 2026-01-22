@@ -91,7 +91,9 @@ set backspace=indent,eol,start
 set cino=(0,W2s
 set hidden
 set autoindent
-exe "set pastetoggle=\<C-\>"
+if !has("nvim")
+    exe "set pastetoggle=\<C-\>"
+endif
 nmap <M-u> :nohls<C-M>
 nmap <Esc>u :nohls<C-M>
 
@@ -130,7 +132,7 @@ if has("cscope")
     set csverb
 endif
 
-if &term =~ '^screen'
+if &term =~ '^screen' && !has('nvim')
     set mouse=nic
     set ttymouse=xterm2
 endif
@@ -144,11 +146,15 @@ nmap <C-_>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
 nmap <C-_>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 nmap <C-_>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 
-set printoptions=header:0,paper:letter
+if !has('nvim')
+    set printoptions=header:0,paper:letter
+endif
 
 set bg=dark
 
-set noesckeys
+if !has('nvim')
+    set noesckeys
+endif
 
 set exrc
 set secure
@@ -161,6 +167,11 @@ set modeline
 execute pathogen#infect()
 
 autocmd BufRead,BufNewFile *.s set ft=asm_ca65
+
+" Convenience searches to find over-indented lines
+" (when indent is expected to be 2).
+let @i="/^\\( *\\)[^ ].*\\n   \\1/"
+let @j="/^+ \\( *\\)[^ ].*\\n+    \\1\\|^+   *$/"
 
 if filereadable(expand('~/.vimrc-local'))
     source ~/.vimrc-local
