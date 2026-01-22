@@ -20,6 +20,8 @@ alias c='LC_ALL=C'
 alias a='printf \\a'
 alias aa='printf \\a; sleep 1; printf \\a'
 alias asa='printf \\a; sleep 1; printf \\a'
+alias glog='git log --pretty=oneline --abbrev-commit'
+alias bobcfg="./configure --prefix=$HOME/opt/bobbin CFLAGS='-Werror -O3'"
 
 alias mcn='ssh micah.cowan.name'
 
@@ -35,5 +37,10 @@ viscr() {
 
 alias teseq='teseq --color=auto'
 ceseq() { teseq --color=always "$@" | \less -r; }
+
+# git-all-status, show the behind/ahead of all branches
+alias gas='git for-each-ref --format="%(refname:short) %(upstream:track)" refs/heads'
+# git-commit-id
+alias gcid='git rev-parse --short HEAD'
 
 # vim: set ft=sh :
