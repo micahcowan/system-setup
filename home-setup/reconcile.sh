@@ -63,11 +63,30 @@ paths_for_dotfiles() {
 }
 
 paths_for_available() {
+    # Check all rc-scripts included with repo
     for file in "$srcdir"/rc-scripts/*; do
         name=${file##*/}
         dest="$HOME/.rc-available/${name}"
         printf '%s %s\n' "$file" "$dest"
     done
+
+    # Also check any rc-scripts on host, not present in repo
+    if test -d ~/.rc-available; then
+        for dest in ~/.rc-available/*; do
+            name=${dest##*/}
+            case "$name" in
+                opt-path-setup.sh|prompt-jobs.sh|dot.runrc.sh)
+                    # Skip these ext-provided files
+                    ;;
+                *)
+                    file="$srcdir/rc-scripts/${name}"
+                    if test ! -e "$file"; then
+                        printf '%s %s\n' "$file" "$dest"
+                    fi
+                    ;;
+            esac
+        done
+    fi
 }
 
 paths_for_ext() {
