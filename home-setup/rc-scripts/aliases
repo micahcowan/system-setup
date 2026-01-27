@@ -35,6 +35,32 @@ viscr() {
     ${VISUAL:-$EDITOR} "$@"
 }
 
+# When in nvim terminal-mode, make nvim and vim open files in
+# current session
+vim_open() {
+    if test "x$NVIM" != x; then
+        nvim --server "$NVIM" --remote-send '<C-\><C-N><C-W>w'
+
+        # Fixup relative args to use absolute paths
+        mjc_vim_ts=
+        for arg; do
+            if test "${arg#/}" = "$arg"; then
+                arg="${PWD}/${arg}"
+            fi
+            mjc_vim_ts="${mjc_vim_ts}${mjc_vim_ts+ }$(printf '%s\n' "$arg" | sed -e "s/'/'\\\\''/g" -e "s/^/'/" -e "s/\$/'/")"
+        done
+        eval "set -- $mjc_vim_ts"
+        echo "$@"
+        unset mjc_vim_ts
+        nvim --server "$NVIM" --remote '<C-A><Tab>'
+        nvim --server "$NVIM" --remote "$@"
+    else
+        command vim "$@"
+    fi
+}
+alias vim=vim_open
+alias v=vim
+
 alias teseq='teseq --color=auto'
 ceseq() { teseq --color=always "$@" | \less -r; }
 

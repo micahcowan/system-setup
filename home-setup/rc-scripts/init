@@ -10,7 +10,7 @@ fi
 PS1="${PS1_OVERRIDE-$(id -n -u)${pmt} }"
 export EMAIL='micah@addictivecode.org'
 export VISUAL=emacsclient
-export VISUAL=vim
+export VISUAL="$(which vim)"
 export LSCOLORS="Exfxcxdxbxegedabagacadah"
 if command -v "$VISUAL" >/dev/null 2>&1
 then
