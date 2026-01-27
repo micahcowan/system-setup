@@ -83,10 +83,13 @@ endif " has("autocmd")
 " Micah's customizations follow.
 "
 
+set exrc
+set number
+set relativenumber
 set softtabstop=4
 set expandtab
 set shiftwidth=4
-set textwidth=72
+set textwidth=77
 set backspace=indent,eol,start
 set cino=(0,W2s
 set hidden
@@ -103,22 +106,22 @@ set ignorecase
 set nobackup
 set noswapfile
 
-let g:changelog_username="Micah Cowan  <micah@cowan.name>"
+let g:changelog_username="Micah Cowan  <micah@addictivecode.org>"
 
-autocmd BufEnter *  lcd %:p:h
+"autocmd BufEnter *  lcd %:p:h
 
-if has("gui_running")
-    set guifont=Monospace\ 8
-    set guioptions-=T
-    set guioptions-=m
-endif
+"if has("gui_running")
+"    set guifont=Monospace\ 8
+"    set guioptions-=T
+"    set guioptions-=m
+"endif
 
 " Quick access to cnext, cprev
 nmap <Tab> :cnext<Return>
 nmap <S-Tab> :cprev<Return>
 
 " Cscope stuff
-if has("cscope")
+if has("cscope") && !has("nvim")
     set csto=0
     set cst
     set nocsverb
@@ -130,21 +133,21 @@ if has("cscope")
         cs add $CSCOPE_DB
     endif
     set csverb
+
+    nmap <C-_>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-_>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-_>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-_>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-_>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-_>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+    nmap <C-_>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+    nmap <C-_>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 endif
 
 if &term =~ '^screen' && !has('nvim')
     set mouse=nic
     set ttymouse=xterm2
 endif
-
-nmap <C-_>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-nmap <C-_>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-nmap <C-_>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-nmap <C-_>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-nmap <C-_>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-nmap <C-_>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-nmap <C-_>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-nmap <C-_>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 
 if !has('nvim')
     set printoptions=header:0,paper:letter
