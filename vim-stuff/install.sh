@@ -23,6 +23,7 @@ if test ! -e ~/.config/nvim/init.lua; then
             ssh://git@github.com/micahcowan/nvim-config.git
         git pull origin main
         git branch -u origin/main main
+        git submodule update --init
     )
 fi
 
