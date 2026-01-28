@@ -70,6 +70,9 @@ paths_for_available() {
                 opt-path-setup.sh|prompt-jobs.sh|dot.runrc.sh)
                     # Skip these ext-provided files
                     ;;
+                *.orig|*.orig.[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9])
+                    # Skip backup files we may have created
+                    ;;
                 *)
                     file="$srcdir/rc-scripts/${name}"
                     if test ! -e "$file"; then
