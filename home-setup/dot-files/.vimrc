@@ -88,7 +88,7 @@ set number
 set relativenumber
 set softtabstop=4
 set expandtab
-set notimeout       -- Let me take as long as I want to type a binding
+set notimeout       " Let me take as long as I want to type a binding
 set shiftwidth=4
 set textwidth=77
 set backspace=indent,eol,start
