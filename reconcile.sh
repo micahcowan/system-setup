@@ -5,6 +5,12 @@ set -e -u -C
 srcdir=$(dirname "$0")
 
 main() {
+    if which nvim >/dev/null 2>&1; then
+        VIM=nvim
+    else
+        VIM=vim
+    fi
+
     assert_recursive_checkout
 
     # 1. Run each module's ./reconcile.sh script, to handle "special
@@ -213,8 +219,8 @@ reconcile_changes() {
         # Reconcile!
         while shift_one_path_record differing record; do
             eval "set -- $record"
-            printf '+vimdiff %s %s\n' "$1" "$2"
-            vimdiff "$1" "$2"
+            printf '+%s -d %s %s\n' "$VIM" "$1" "$2"
+            "$VIM" -d "$1" "$2"
         done
     fi
 }

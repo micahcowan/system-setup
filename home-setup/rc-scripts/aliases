@@ -35,6 +35,9 @@ viscr() {
     ${VISUAL:-$EDITOR} "$@"
 }
 
+alias vimdiff='vim -d'
+alias view='vim -R'
+
 # When in nvim terminal-mode, make nvim and vim open files in
 # current session
 vim_open() {
@@ -52,10 +55,10 @@ vim_open() {
         eval "set -- $mjc_vim_ts"
         echo "$@"
         unset mjc_vim_ts
-        nvim --server "$NVIM" --remote '<C-A><Tab>'
+        #nvim --server "$NVIM" --remote '<C-A><Tab>'
         nvim --server "$NVIM" --remote "$@"
     else
-        command vim "$@"
+        command nvim "$@"
     fi
 }
 alias vim=vim_open
