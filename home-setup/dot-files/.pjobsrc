@@ -10,6 +10,11 @@ elif test "${PWDSAVE#/tmp/quilt}" != "$PWDSAVE"; then
     PJOBS_BASE_TPUT='sgr0; setaf 2'
     PJOBS_NUM_TPUT='sgr0; bold' # bold white
     PJOBS_JOB_TPUT='sgr0' # dim white
+elif test "${IN_NIX_SHELL+yes}" = "yes"; then
+    # Green prompt when we're in a nix-shell, too
+    PJOBS_BASE_TPUT='sgr0; setaf 2'
+    PJOBS_NUM_TPUT='sgr0; bold' # bold white
+    PJOBS_JOB_TPUT='sgr0' # dim white
 elif test "$(tput colors)" -eq 256; then
     PJOBS_BASE_TPUT='sgr0; setaf 103' # grey-blue
     PJOBS_SEP_TPUT='bold; setaf 19' # bold, muted blue
