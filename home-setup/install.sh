@@ -130,7 +130,15 @@ populate_enabled() {
     for file in "${avail}"/*; do
         contains .orig "$file" && continue
         bfile=$(basename "$file")
-        symlink "../.rc-available/$bfile" "${enabled}/$bfile"
+        dfile=$bfile
+        case "$dfile" in
+            init|opt-path-setup.sh)
+                dfile=00-$dfile
+                ;;
+            *)
+                ;;
+        esac
+        symlink "../.rc-available/$bfile" "${enabled}/$dfile"
     done
 }
 
