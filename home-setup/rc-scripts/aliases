@@ -32,7 +32,11 @@ viscr() {
         touch "$n"
         chmod +x "$n"
     done
-    ${VISUAL:-$EDITOR} "$@"
+    if test "x$NVIM" != x; then
+        vim "$@"
+    else
+        ${VISUAL:-$EDITOR} "$@"
+    fi
 }
 
 alias vimdiff='vim -d'
