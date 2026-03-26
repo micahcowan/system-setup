@@ -47,21 +47,24 @@ alias view='vim -R'
 vim_open() {
     if test "x$NVIM" != x; then
         nvim --server "$NVIM" --remote-send '<C-\><C-N>:MjcEditTab<CR>'
-        if test $# -gt 0; then
-            nvim --server "$NVIM" --remote-send ':tcd '"${1%/*}"'<CR>'
-        fi
 
         # Fixup relative args to use absolute paths
         mjc_vim_ts=
+        mjc_vim_first=yes
         for arg; do
             if test "${arg#/}" = "$arg"; then
                 arg="${PWD}/${arg}"
+                if test -n "$mjc_vim_first"; then
+                    nvim --server "$NVIM" --remote-send \ ':tcd '"${arg%/*}"'<CR>'
+                    mjc_vim_first=
+                fi
             fi
             mjc_vim_ts="${mjc_vim_ts}${mjc_vim_ts+ }$(printf '%s\n' "$arg" | sed -e "s/'/'\\\\''/g" -e "s/^/'/" -e "s/\$/'/")"
         done
         eval "set -- $mjc_vim_ts"
         echo "$@"
         unset mjc_vim_ts
+        unset mjc_vim_first
         nvim --server "$NVIM" --remote "$@"
     else
         nvim "$@"
