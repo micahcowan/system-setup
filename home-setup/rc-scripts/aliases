@@ -46,7 +46,10 @@ alias view='vim -R'
 # current session
 vim_open() {
     if test "x$NVIM" != x; then
-        nvim --server "$NVIM" --remote-send '<C-\><C-N>:MjcEditTab<CR>:tcd '"$PWD"'<CR>'
+        nvim --server "$NVIM" --remote-send '<C-\><C-N>:MjcEditTab<CR>'
+        if test $# -gt 0; then
+            nvim --server "$NVIM" --remote-send ':tcd '"${1%/*}"'<CR>'
+        fi
 
         # Fixup relative args to use absolute paths
         mjc_vim_ts=
